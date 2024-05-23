@@ -99,7 +99,7 @@ class Prompt {
 
   template <class... Args>
   std::string applyHelper(Args... args) const {
-	  return this(std::forward<Args>(args)...);
+    return this(std::forward<Args>(args)...);
   }
 
  public:
@@ -110,16 +110,21 @@ class Prompt {
   template <class... Args>
   std::string operator()(Args... args) const {
     std::string output{template_};
+
+    // sometimes there's a trailing null character that needs to be trimmed when
+    // converting to std::string
+    if (output.at(output.size() - 1) == '\0') {
+      output = output.substr(0, output.size() - 1);
+    }
     (format<args.template my_key.size, args.template my_key>(args.value,
                                                              output),
      ...);
     return output;
   }
 
-
   // Async version that takes a vector of tuples, formats each using the
   // operator above, and returns the results asynchronously
-   template <class... Args>
+  template <class... Args>
   std::vector<std::string> operator()(
       const std::vector<std::tuple<Args...>>& inputs) const {
     std::vector<std::future<std::string>> futures;

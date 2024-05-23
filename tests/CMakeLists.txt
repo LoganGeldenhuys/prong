@@ -11,6 +11,7 @@ add_definitions(-DBOOST_BIND_GLOBAL_PLACEHOLDERS)
 # Find the required packages
 find_package(Boost REQUIRED COMPONENTS system) # Find Boost, system component for ASIO
 find_package(OpenSSL REQUIRED) # Find OpenSSL
+find_package(GTest REQUIRED) # Find locally installed Google Test
 add_definitions(-DBOOST_BIND_GLOBAL_PLACEHOLDERS)
 
 # Include the parent include directory to mimic installed state
@@ -39,12 +40,15 @@ if(BUILD_TESTS)
 			# Include directories for target
 			target_include_directories(prong-test-${test} PRIVATE ${Boost_INCLUDE_DIRS})
 			target_include_directories(prong-test-${test} PRIVATE ${OPENSSL_INCLUDE_DIR})
+			target_include_directories(prong-test-${test} PRIVATE ${GTEST_INCLUDE_DIRS}) 
 
 			# Link libraries to executable
 			target_link_libraries(prong-test-${test}
 					OpenSSL::SSL
 					OpenSSL::Crypto
 					${Boost_LIBRARIES}
+					GTest::GTest         
+            		GTest::Main
 					)
 
 			# Add the tests to CTest
