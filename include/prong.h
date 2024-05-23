@@ -1,7 +1,6 @@
 #ifndef PRONG_H
 #define PRONG_H
 
-#include "prong/apply_to_tuple.h"
 #include "prong/chat_prompt.h"
 #include "prong/combined_runnable.h"
 #include "prong/message.h"

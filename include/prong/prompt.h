@@ -13,7 +13,6 @@
 #include <utility>
 #include <variant>
 #include <vector>
-#include "apply_to_tuple.h"
 #include "prompt_runnable.h"
 #include "runnable.h"
 #include "string_literal.h"
@@ -99,9 +98,16 @@ class Prompt {
     targetString = std::regex_replace(targetString, varRegex, value);
   }
 
+  template <class... Args>
+  std::string applyHelper(Args... args) const {
+	  return this(std::forward<Args>(args)...);
+  }
+
  public:
   explicit Prompt() {}
 
+  // Formats the template string by replacing placeholders using provided
+  // arguments
   template <class... Args>
   std::string operator()(Args... args) const {
     std::string output{template_};
@@ -111,13 +117,16 @@ class Prompt {
     return output;
   }
 
-  template <class... Args>
+
+  // Async version that takes a vector of tuples, formats each using the
+  // operator above, and returns the results asynchronously
+   template <class... Args>
   std::vector<std::string> operator()(
       const std::vector<std::tuple<Args...>>& inputs) const {
     std::vector<std::future<std::string>> futures;
     for (const std::tuple<Args...>& input : inputs) {
       futures.push_back(std::async(std::launch::async, [this, &input]() {
-        return applyToTuple(
+        return std::apply(
             [this](auto&&... args) {
               return this->operator()(std::forward<decltype(args)>(args)...);
             },
@@ -132,6 +141,7 @@ class Prompt {
     return results;
   }
 
+  // Outputs the formatted string to the provided ostream
   template <class... Args>
   std::string operator()(std::ostream& os, Args... args) const {
     std::string output{template_};
@@ -142,6 +152,7 @@ class Prompt {
     return output;
   }
 
+  // Composes this Prompt with a Runnable to form a PromptRunnable
   template <class NewOutput>
   PromptRunnable<Prompt<template_s>, std::string, NewOutput> operator|(
       Runnable<std::string, NewOutput>& newRight) {

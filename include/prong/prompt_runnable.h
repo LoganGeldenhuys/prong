@@ -1,8 +1,6 @@
 #ifndef PRONG_PROMPT_RUNNABLE_H
 #define PRONG_PROMPT_RUNNABLE_H
 
-#include "apply_to_tuple.h"
-#include "prompt.h"
 #include "runnable.h"
 #include "template_string.h"
 
@@ -31,7 +29,7 @@ class PromptRunnable {
     std::vector<std::future<Output>> futures;
     for (const std::tuple<Args...> input : inputs) {
       futures.push_back(std::async(std::launch::async, [this, input]() {
-        return applyToTuple(
+        return std::apply(
             [this](auto&&... args) {
               return (*(this->right_))(
                   this->left_(std::forward<decltype(args)>(args)...));
