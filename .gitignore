@@ -1,0 +1,71 @@
+# Ignore directory where CMake builds occur
+/tests/build/
+/examples/build/
+CMakeFiles/
+
+# CMake and CTest generated files and directories
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+CTestTestfile.cmake
+DartConfiguration.tcl
+Testing/    
+*.cmake    
+
+# CCLS cache directory
+.ccls-cache/
+
+# Cache directories commonly used by various tools
+.cache/
+*.cache
+
+# Ignore specific files that may contain sensitive information or configuration specific to a developer's environment
+*.env
+*.config
+
+# Ignore Makefile and compilation products
+Makefile
+compile_commands.json
+*.o
+*.so
+*.a
+
+# Ignore archives containing binaries or libraries
+*.zip
+*.tar.gz
+
+# Versioning files for CMake packaging
+*ConfigVersion.cmake
+*Targets.cmake
+
+# Ignore editor backup files
+*~
+*.bak
+.*.swp
+.*.swo
+*.undo
+
+
+# Ignore all log files
+*.log
+
+# Ignore application specific files
+*.exe
+*.dll
+*.dylib
+
+# Ignore IDE and text editor folders
+.vscode/
+.idea/
+*.sublime-workspace
+
+
+# Ignore specific project directories or files
+todos
+
+# Documentation files
+*.md
+
+# Include global gitignore settings
+!global.gitignore
+

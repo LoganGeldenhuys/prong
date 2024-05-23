@@ -4,28 +4,28 @@
 #include <iostream>
 #include <map>
 #include <optional>
-#include <string>
 #include <sstream>
+#include <string>
 
 namespace Prong {
 
 // Simple message class, has content, role and << operator
 class Message {
-	public:
-		std::string content;
-		std::string role;
+ public:
+  std::string content;
+  std::string role;
 
-		Message(const std::string& role, const std::string& content) : role(role), content(content) {}
-
+  Message(const std::string& role, const std::string& content)
+      : role(role), content(content) {}
 };
 
-	std::ostream& operator<<(std::ostream& os, const Message& msg) {
-		std::ostringstream ss;
-		ss << msg.role <<": " << msg.content << "\n";
-		os << ss.str();
-		return os;
-	}
+std::ostream& operator<<(std::ostream& os, const Message& msg) {
+  std::ostringstream ss;
+  ss << msg.role << ": " << msg.content << "\n";
+  os << ss.str();
+  return os;
+}
 
-} // namespace Prong
+}  // namespace Prong
 
-#endif // PRONG_MESSAGE_H
+#endif  // PRONG_MESSAGE_H

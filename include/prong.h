@@ -14,5 +14,4 @@
 #include "prong/substitution_vector.h"
 #include "prong/template_string.h"
 
-#endif // PRONG_H
-
+#endif  // PRONG_H

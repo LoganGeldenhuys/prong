@@ -5,15 +5,16 @@
 #include "substitution.h"
 
 namespace Prong {
-	// Template class just for type aliasing, doesn't hold any data
-	template <class... Args>
-	struct SubstitutionsVector{
-		using type = std::vector<std::tuple<Args...>>;
-	};
+// Template class just for type aliasing, doesn't hold any data
+template <class... Args>
+struct SubstitutionsVector {
+  using type = std::vector<std::tuple<Args...>>;
+};
 
-	// Type alias for convenient usage without needing to create tuples
-	template <Prong::StringLiteral... Args>
-	using SubstitutionVector= typename SubstitutionsVector<Prong::Substitution<Args>...>::type;
-} // Prong
+// Type alias for convenient usage without needing to create tuples
+template <Prong::StringLiteral... Args>
+using SubstitutionVector =
+    typename SubstitutionsVector<Prong::Substitution<Args>...>::type;
+}  // namespace Prong
 
-#endif // PRONG_SUBSTITUTION_VECTOR
+#endif  // PRONG_SUBSTITUTION_VECTOR

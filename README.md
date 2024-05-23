@@ -1,3 +1,6 @@
+# Changes for Prong v0.2
+
+
 # Prong v0.1
 
 This is a header-only C++ prompt engineering library (hence the name pro-ng). It aims to work well with the STL and limit external dependencies.
@@ -91,7 +94,7 @@ vector<Message> outputs = chain(input);
 ## Dependencies
 
 To utilize `prong_integrations`, you must first ensure that OpenSSL (minimum version 3.0.2) and Boost (minimum version 1.74) are installed on your system. While these dependencies are not required for building the core `prong` library, they are required for `prong_integrations`.
-Note `prong_integrations` has been developed for and tested on Linux. It should work on Mac and Windows for dev purposes. However, https certificate loading is not implemented securely for those systems and it should not be run in a production in a Mac or Windows environment (as unlikely as that is).
+Note `prong_integrations` has been developed for and tested on Linux. It should work on Mac and Windows for dev purposes. However, https certificate loading is not implemented securely for those systems and it should not be run in production in a Mac or Windows environment (as unlikely as that is).
 
 ### OpenSSL Installation
 
@@ -298,4 +301,5 @@ This example showcases chains and parallel batch processing
 
 ## Acknowledgments
 
-This project is inspired by the LangChain library, created by Harrison Chase and managed by LangChain, Inc. 
+1. This project is inspired by the LangChain library, created by Harrison Chase and managed by LangChain, Inc. 
+2. The http and https clients, as well as the root certificates file are primarily based on examples by Vinnie Falco from the boost::beast library.
