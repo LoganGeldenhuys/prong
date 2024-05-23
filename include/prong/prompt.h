@@ -107,8 +107,8 @@ class Prompt {
 
   // Formats the template string by replacing placeholders using provided
   // arguments
-  template <class... Args>
-  std::string operator()(Args... args) const {
+  template <StringLiteral... keys>
+  std::string operator()(const Substitution<keys>&... substitutions) const {
     std::string output{template_};
 
     // sometimes there's a trailing null character that needs to be trimmed when
@@ -116,7 +116,7 @@ class Prompt {
     if (output.at(output.size() - 1) == '\0') {
       output = output.substr(0, output.size() - 1);
     }
-    (format<args.template my_key.size, args.template my_key>(args.value,
+    (format<substitutions.template my_key.size, substitutions.template my_key>(substitutions.value,
                                                              output),
      ...);
     return output;
@@ -124,15 +124,15 @@ class Prompt {
 
   // Async version that takes a vector of tuples, formats each using the
   // operator above, and returns the results asynchronously
-  template <class... Args>
+  template <StringLiteral... keys>
   std::vector<std::string> operator()(
-      const std::vector<std::tuple<Args...>>& inputs) const {
+      const std::vector<std::tuple<Substitution<keys>...>>& inputs) const {
     std::vector<std::future<std::string>> futures;
-    for (const std::tuple<Args...>& input : inputs) {
+    for (const std::tuple<Substitution<keys>...>& input : inputs) {
       futures.push_back(std::async(std::launch::async, [this, &input]() {
         return std::apply(
-            [this](auto&&... args) {
-              return this->operator()(std::forward<decltype(args)>(args)...);
+            [this](Substitution<keys>... substitutions) {
+              return this->operator()(substitutions...);
             },
             input);
       }));
@@ -146,10 +146,10 @@ class Prompt {
   }
 
   // Outputs the formatted string to the provided ostream
-  template <class... Args>
-  std::string operator()(std::ostream& os, Args... args) const {
+  template <StringLiteral... keys>
+  std::string operator()(std::ostream& os, const Substitution<keys>&... substitutions) const {
     std::string output{template_};
-    (format<args.template my_key.size, args.template my_key>(args.value,
+    (format<substitutions.template my_key.size, substitutions.template my_key>(substitutions.value,
                                                              output),
      ...);
     os << output;

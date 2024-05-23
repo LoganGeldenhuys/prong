@@ -44,7 +44,8 @@ int main() {
   // Generate substitutions
   SubstitutionVector<"topic", "input"> input;
 
-  for (auto month : months) {
+
+	for (auto month : months) {
     input.push_back(std::tuple(Substitution<"topic">(month),
                                Substitution<"input">(userInput)));
   }

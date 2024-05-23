@@ -19,21 +19,21 @@ class ChatPrompt {
               << std::endl;
   }
 
-  template <class... Args>
-  std::vector<Message> operator()(Args... args) const {
+  template <StringLiteral... keys>
+  std::vector<Message> operator()(const Substitution<keys>&... substitutions) const {
     std::vector<Message> results;
     results.reserve(sizeof...(messagePrompts));
     (
-        [&results, args...](auto& messagePrompt) {
-          results.push_back(messagePrompt(args...));
+        [&results, substitutions...](auto& messagePrompt) {
+          results.push_back(messagePrompt(substitutions...));
         }(messagePrompts),
         ...);
     return results;
   }
 
-  template <class... Args>
+  template <StringLiteral... keys>
   std::vector<std::vector<Message>> operator()(
-      const std::vector<std::tuple<Args...>>& inputs) const {
+      const std::vector<std::tuple<Substitution<keys>...>>& inputs) const {
     std::vector<std::vector<Message>> results;
     results.reserve(inputs.size());
 
@@ -53,14 +53,14 @@ class ChatPrompt {
     return results;
   }
 
-  template <class... Args>
-  std::vector<Message> operator()(std::ostream& os, Args... args) const {
+  template <StringLiteral... keys>
+  std::vector<Message> operator()(std::ostream& os, const Substitution<keys>&... substitutions) const {
     std::vector<Message> results;
     results.reserve(sizeof...(messagePrompts));
 
     (
-        [&results, &os, &args...](auto& messagePrompt) {
-          results.push_back(messagePrompt(os, std::forward<Args>(args)...));
+        [&results, &os, &substitutions...](auto& messagePrompt) {
+          results.push_back(messagePrompt(os, substitutions...));
         }(messagePrompts),
         ...);
 

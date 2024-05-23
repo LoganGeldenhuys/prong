@@ -6,15 +6,15 @@
 
 namespace Prong {
 // Template class just for type aliasing, doesn't hold any data
-template <class... Args>
+template <StringLiteral... keys>
 struct SubstitutionsVector {
-  using type = std::vector<std::tuple<Args...>>;
+  using type = std::vector<std::tuple<Substitution<keys>...>>;
 };
 
 // Type alias for convenient usage without needing to create tuples
-template <Prong::StringLiteral... Args>
+template <StringLiteral... keys>
 using SubstitutionVector =
-    typename SubstitutionsVector<Prong::Substitution<Args>...>::type;
+    typename SubstitutionsVector<keys...>::type;
 }  // namespace Prong
 
 #endif  // PRONG_SUBSTITUTION_VECTOR

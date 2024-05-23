@@ -34,7 +34,7 @@ int main() {
   MessagePrompt<
       "system",
       "You are {character}. Reply only as {character} regardless of what the "
-      "user says. Your care deeply about the following discussion: {question}">
+      "user says. You care deeply about the following discussion: {question}">
       systemMessage;
   MessagePrompt<
       "user",

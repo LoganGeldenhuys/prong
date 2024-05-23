@@ -2,6 +2,8 @@
 #define PRONG_PROMPT_RUNNABLE_H
 
 #include "runnable.h"
+#include "string_literal.h"
+#include "substitution.h"
 
 namespace Prong {
 
@@ -17,21 +19,21 @@ class PromptRunnable {
   PromptRunnable(PromptType prompt, Runnable<Intermediate, Output>& right)
       : left_(prompt), right_(&right) {}
 
-  template <class... Args>
-  Output operator()(Args... args) {
-    return (*right_)(left_(std::forward<Args>(args)...));
+  template <StringLiteral... keys>
+  Output operator()(const Substitution<keys>&... substitutions) {
+    return (*right_)(left_(substitutions...));
   }
 
-  template <class... Args>
+  template <StringLiteral... keys>
   std::vector<Output> operator()(
-      const std::vector<std::tuple<Args...>>& inputs) {
+      const std::vector<std::tuple<Substitution<keys>...>>& inputs) {
     std::vector<std::future<Output>> futures;
-    for (const std::tuple<Args...> input : inputs) {
+    for (const std::tuple<Substitution<keys>...> input : inputs) {
       futures.push_back(std::async(std::launch::async, [this, input]() {
         return std::apply(
-            [this](auto&&... args) {
+            [this](const Substitution<keys>&... substitutions) {
               return (*(this->right_))(
-                  this->left_(std::forward<decltype(args)>(args)...));
+                  this->left_(substitutions...));
             },
             input);
       }));
@@ -43,9 +45,9 @@ class PromptRunnable {
     return results;
   }
 
-  template <class... Args>
-  Output operator()(std::ostream& os, Args... args) {
-    return (*right_)(os, left_(std::forward<Args>(args)...));
+  template <StringLiteral... keys>
+  Output operator()(std::ostream& os, const Substitution<keys>&... substitutions) {
+    return (*right_)(os, left_(substitutions...));
   };
 
   template <class NewOutput>

@@ -14,17 +14,17 @@ struct MessagePrompt {
   static constexpr StringLiteral template_s = template_;
   static constexpr StringLiteral messageType = messageRole;
 
-  template <class... Args>
-  Message operator()(Args... args) const {
+  template <StringLiteral... keys>
+  Message operator()(const Substitution<keys>&... substitutions) const {
     Prompt<template_> p;
-    return Message(std::string{messageType}, p(std::forward<Args>(args)...));
+    return Message(std::string{messageType}, p(substitutions...));
   }
 
-  template <class... Args>
+  template <StringLiteral... keys>
   std::vector<Message> operator()(
-      const std::vector<std::tuple<Args...>>& inputs) const {
+      const std::vector<std::tuple<Substitution<keys>...>>& inputs) const {
     std::vector<std::future<Message>> futures;
-    for (const std::tuple<Args...>& input : inputs) {
+    for (const std::tuple<Substitution<keys>...>& input : inputs) {
       futures.push_back(std::async(std::launch::async, [this, &input]() {
         Prompt<template_s> p;
         return Message(std::string{messageType}, p(input));
@@ -38,10 +38,10 @@ struct MessagePrompt {
     return results;
   }
 
-  template <class... Args>
-  Message operator()(std::ostream& os, Args... args) const {
+  template <StringLiteral... keys>
+  Message operator()(std::ostream& os, const Substitution<keys>&... substitutions) const {
     Prompt<template_> p;
-    Message message(std::string{messageType}, p(std::forward<Args>(args)...));
+    Message message(std::string{messageType}, p(substitutions...));
     os << message;
     return message;
   }
