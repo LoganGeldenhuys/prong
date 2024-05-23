@@ -11,6 +11,5 @@
 #include "prong/string_literal.h"
 #include "prong/substitution.h"
 #include "prong/substitution_vector.h"
-#include "prong/template_string.h"
 
 #endif  // PRONG_H

@@ -17,14 +17,13 @@
 #include "runnable.h"
 #include "string_literal.h"
 #include "substitution.h"
-#include "template_string.h"
 
 namespace Prong {
 
 // The base prompt type. Handles placing Substitutions into template strings.
 // Also checks whether Substitutions are valid. Returns a simple std::string
 // when passed Substitutions.
-template <TemplateString template_s>
+template <StringLiteral template_s>
 class Prompt {
  private:
   static constexpr std::string_view template_{template_s.value.data(),

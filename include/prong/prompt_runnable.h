@@ -2,7 +2,6 @@
 #define PRONG_PROMPT_RUNNABLE_H
 
 #include "runnable.h"
-#include "template_string.h"
 
 namespace Prong {
 

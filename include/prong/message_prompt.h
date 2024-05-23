@@ -4,15 +4,14 @@
 #include "message.h"
 #include "prompt.h"
 #include "string_literal.h"
-#include "template_string.h"
 
 namespace Prong {
 
 // A special type of prompt that returns a Message when passed a substitution
 // (not a std::string like Prong::Prompt)
-template <StringLiteral messageRole, TemplateString template_>
+template <StringLiteral messageRole, StringLiteral template_>
 struct MessagePrompt {
-  static constexpr TemplateString template_s = template_;
+  static constexpr StringLiteral template_s = template_;
   static constexpr StringLiteral messageType = messageRole;
 
   template <class... Args>

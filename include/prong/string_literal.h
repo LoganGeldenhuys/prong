@@ -1,36 +1,38 @@
-#ifndef PRONG_STRING_LITERAL_H
-#define PRONG_STRING_LITERAL_H
+#ifndef PRONG_TEMPLATE_STRING_H
+#define PRONG_TEMPLATE_STRING_H
 
+#include <algorithm>
+#include <array>
 #include <compare>
 #include <cstddef>
 
 namespace Prong {
 
-// A custom data type that allows us to use string literals as template
-// parameters credit to
-// https://www.reddit.com/r/cpp/comments/bhxx49/comment/elwmdjp/
-template <size_t n>
+// A custom data type that allows us to instantiate prompts from TemplateStrings
+// Will add some more static type safety features unique to TemplateStrings down
+// the line but is currently basically the same as StringLiteral
+template <std::size_t N>
 struct StringLiteral {
-  char buf[n + 1]{};
-  size_t size = n;
-  constexpr StringLiteral(char const* s) {
-    for (size_t i = 0; i != n; ++i)
-      buf[i] = s[i];
-    buf[n] = '\0';
+  size_t size = N;
+  constexpr StringLiteral(const char (&str)[N]) {
+    std::copy_n(str, N, value.begin());
   }
-  constexpr operator char const*() const { return buf; }
+  std::array<char, N> value;
+
+  constexpr operator char const*() const { return value.data(); }
 
   constexpr auto operator<=>(const StringLiteral& other) const {
-    for (size_t i = 0; i != n; ++i) {
-      if (buf[i] != other.buf[i]) {
-        return buf[i] <=> other.buf[i];
+    for (size_t i = 0; i != N; ++i) {
+      if (value[i] != other.buf[i]) {
+        return value[i] <=> other.buf[i];
       }
     }
     return std::strong_ordering::equal;
   }
 };
-template <size_t n>
-StringLiteral(char const (&)[n]) -> StringLiteral<n - 1>;
+
+template <size_t N>
+StringLiteral(char const (&)[N]) -> StringLiteral<N>;
 
 }  // namespace Prong
 
