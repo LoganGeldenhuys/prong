@@ -27,7 +27,12 @@ struct MessagePrompt {
     for (const std::tuple<Substitution<keys>...>& input : inputs) {
       futures.push_back(std::async(std::launch::async, [this, &input]() {
         Prompt<template_s> p;
-        return Message(std::string{messageType}, p(input));
+        return Message(std::string{messageType},
+                       std::apply(
+                           [p](Substitution<keys>... substitutions) {
+                             return p(substitutions...);
+                           },
+                           input));
       }));
     }
 
@@ -39,7 +44,8 @@ struct MessagePrompt {
   }
 
   template <StringLiteral... keys>
-  Message operator()(std::ostream& os, const Substitution<keys>&... substitutions) const {
+  Message operator()(std::ostream& os,
+                     const Substitution<keys>&... substitutions) const {
     Prompt<template_> p;
     Message message(std::string{messageType}, p(substitutions...));
     os << message;
