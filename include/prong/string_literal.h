@@ -5,6 +5,7 @@
 #include <array>
 #include <compare>
 #include <cstddef>
+#include <iostream>
 #include <string>
 
 namespace Prong {
@@ -24,11 +25,20 @@ struct StringLiteral {
 
   constexpr auto operator<=>(const StringLiteral& other) const {
     for (size_t i = 0; i != N; ++i) {
-      if (value[i] != other.buf[i]) {
-        return value[i] <=> other.buf[i];
+      if (value[i] != other[i]) {
+        return value[i] <=> other[i];
       }
     }
     return std::strong_ordering::equal;
+  }
+
+  constexpr auto operator==(const StringLiteral& other) const {
+    for (size_t i = 0; i != N; ++i) {
+      if (value[i] != other[i]) {
+        return false;
+      }
+    }
+    return true;
   }
 };
 
