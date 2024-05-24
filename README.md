@@ -235,6 +235,7 @@ All the files can be found under include/prong
 **Runnable**
 
 - Core runnable class that handles parallelization of sub-classes such as ChatModel. Also has a utility streaming operator() method that can be overloaded for different behavior
+- Abstract class - the deriving class must override the run method and optionally the runAndStream method
 
 **CombinedRunnable** 
 

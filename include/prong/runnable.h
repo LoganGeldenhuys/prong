@@ -14,13 +14,24 @@ namespace Prong {
 // overloaded for different behavior
 template <class Input, class Output>
 class Runnable {
+ private:
+  virtual Output run(const Input& input) const = 0;
+
+  virtual Output runAndStream(std::ostream& os, const Input& input) const {
+    Output result = (*this)(input);
+    os << result;
+    return result;
+  }
+
  public:
-  // Asynchronously process a single input using call method
-  virtual Output operator()(const Input& input) const = 0;
+  // Process a single input using run method
+  virtual Output operator()(const Input& input) const final {
+    return run(input);
+  }
 
   // Process a list of inputs and return a vector of futures using call method
   virtual std::vector<Output> operator()(
-      const std::vector<Input>& inputs) const {
+      const std::vector<Input>& inputs) const final {
     std::vector<std::future<Output>> futures;
     for (const auto& input : inputs) {
       futures.push_back(std::async(std::launch::async,
@@ -34,12 +45,10 @@ class Runnable {
     return results;
   }
 
-  // Asynchronously process a single input and stream the result to the provided
+  // Process a single input and stream the result to the provided
   // stream using call method
-  virtual Output operator()(std::ostream& os, const Input& input) const {
-    Output result = (*this)(input);
-    os << result;
-    return result;
+  virtual Output operator()(std::ostream& os, const Input& input) const final {
+    return runAndStream(os, input);
   }
 };
 

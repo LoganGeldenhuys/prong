@@ -8,8 +8,7 @@ using namespace Prong;
 using namespace std;
 
 class SimpleChatModel : public ChatModel {
- public:
-  virtual Message operator()(const std::vector<Message>& input) const override {
+  virtual Message run(const std::vector<Message>& input) const override {
     if (!input.empty()) {
       return Message("assistant", input[input.size() - 1].content);
     }

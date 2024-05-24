@@ -11,7 +11,7 @@ vector<string> months = {"January",   "February", "March",    "April",
 
 class SimpleChatModel : public ChatModel {
  public:
-  virtual Message operator()(const std::vector<Message>& input) const override {
+  virtual Message run(const std::vector<Message>& input) const override {
     if (!input.empty()) {
       return Message("assistant", input[input.size() - 1].content);
     }
@@ -44,8 +44,7 @@ int main() {
   // Generate substitutions
   SubstitutionVector<"topic", "input"> input;
 
-
-	for (auto month : months) {
+  for (auto month : months) {
     input.push_back(std::tuple(Substitution<"topic">(month),
                                Substitution<"input">(userInput)));
   }

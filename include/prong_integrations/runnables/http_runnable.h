@@ -45,7 +45,6 @@ class HTTPRunnable : public Runnable<Input, Output> {
   }
   virtual int getVersion_Stream() const { return getVersion_(); }
 
- public:
   // Simply prints the JSON, override if streaming behavior should be different
   virtual std::string parseResponse_Stream(
       const boost::property_tree::ptree& pt) const {
@@ -55,7 +54,7 @@ class HTTPRunnable : public Runnable<Input, Output> {
   }
 
   // Implementing the call method
-  virtual Output operator()(const Input& input) const override {
+  virtual Output run(const Input& input) const override {
     // Use http_request_json to make an asynchronous request to the OpenAI API
     boost::property_tree::ptree responsePTree;
 
@@ -81,8 +80,8 @@ class HTTPRunnable : public Runnable<Input, Output> {
   }
 
   // Implementing the call method
-  virtual Output operator()(std::ostream& os,
-                            const Input& input) const override {
+  virtual Output runAndStream(std::ostream& os,
+                              const Input& input) const override {
     // TODO finish implementing and testing streaming
 
     // Use http_request_json to make an asynchronous request to the OpenAI API

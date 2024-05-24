@@ -20,16 +20,14 @@ class CombinedRunnable : public Runnable<Input, Output> {
   Runnable<Input, Intermediate>* left_;
   Runnable<Intermediate, Output>* right_;
 
+  virtual Output run(const Input& input) const override {
+    return (*right_)((*left_)(input));
+  }
+
  public:
   CombinedRunnable(Runnable<Input, Intermediate>& left,
                    Runnable<Intermediate, Output>& right)
       : left_(&left), right_(&right) {}
-
-  virtual Output operator()(Input input) override {
-    return right_(left_(input));
-  }
-
-  // Note gets other operator() overloads from inheritance
 
   template <typename NewOutput>
   CombinedRunnable<Input, Output, NewOutput> operator|(
