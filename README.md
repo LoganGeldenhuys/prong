@@ -1,10 +1,27 @@
 # Changes for Prong v0.2
 
 
-# Prong v0.1
+# Prong v0.2
 
 This is a header-only C++ prompt engineering library (hence the name pro-ng). It aims to work well with the STL and limit external dependencies.
 The core prong library has no dependencies while the only dependencies for prong\_integrations are on Boost and OpenSSL to support networking for the OpenAI integration.
+
+## What's new in v0.2
+
+### Big Changes
+- experimental chat stream added, see examples
+- added CTest and Google test to CMake 
+- added formatting (Chromium style) using clang-format and CMake
+
+### Bug fixes
+- Fixed bug that left trailing null terminators at end of prompt strings
+- Fixed bug when overriding one instance of () operator in a derived class would prevent any of the other overloaded () operators from being called even if they had a different signature fixed it by creating specific run and well as runAndStream methods for the derived class to override and made the () operator final
+- Fixed a template type deduction failure in message-prompt's batch processing
+
+### Refactors
+- replaced custom applyToTuple function with std::apply
+- deduplicated StringLiteral and TemplateString, StringLiteral is now used for both.
+
 
 ## Features
 

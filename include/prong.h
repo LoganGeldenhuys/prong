@@ -11,5 +11,6 @@
 #include "prong/string_literal.h"
 #include "prong/substitution.h"
 #include "prong/substitution_vector.h"
+#include "prong/chat_stream.h"
 
 #endif  // PRONG_H
