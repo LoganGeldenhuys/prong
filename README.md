@@ -39,9 +39,10 @@ int main() {
   // Create substitution to feed to chain
   Substitution<"topic"> topic(userInput);
 
-  // run chain
+  // Run chain
   Message output = chain(topic);
 
+  // Print output
   cout << output.content << endl;
 }
 ```
