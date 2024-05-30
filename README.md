@@ -233,15 +233,23 @@ target_link_libraries(your_target_name
 )
 ```
 
-## Building the Examples
+## Running the Examples
 
-To compile the example programs:
+To compile and run the example programs:
 
 1. Navigate to the `/examples` directory.
 2. Generate the build system by running `cmake .`
 3. Compile the examples using `make`.
 4. Execute any of the example binaries to see Prong in action.
 
+## Running the tests
+
+To compile and run the tests:
+
+1. Navigate to the root directory
+2. Generate the build system by running `cmake .`
+3. Compile the tests using `make`.
+4. Run the tests by typing in `ctest`
 
 ## Library overview - Core Prong Library
 
