@@ -242,7 +242,7 @@ To compile and run the example programs:
 3. Compile the examples using `make`.
 4. Execute any of the example binaries to see Prong in action.
 
-## Running the tests
+## Running the Tests
 
 To compile and run the tests:
 
