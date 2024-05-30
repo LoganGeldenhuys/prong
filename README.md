@@ -15,7 +15,7 @@ The core prong library has no dependencies while the only dependencies for prong
 
 ### Bug fixes
 - Fixed bug that left trailing null terminators at end of prompt strings
-- Fixed bug when overriding one instance of () operator in a derived class would prevent any of the other overloaded () operators from being called even if they had a different signature fixed it by creating specific run and well as runAndStream methods for the derived class to override and made the () operator final
+- Fixed bug when overriding one instance of () operator in a derived class would prevent any of the other overloaded () operators from being called even if they had a different signature. Was fixed it by changing interface to specific run and well as runAndStream methods for the derived class to override, making the () operator final
 - Fixed a template type deduction failure in message-prompt's batch processing
 
 ### Refactors
