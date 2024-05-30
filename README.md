@@ -20,9 +20,10 @@ using namespace Prong;
 using namespace std;
 
 int main() {
-  // Set up prompts
+  // Set up MessagePrompt
   MessagePrompt<"system", "Write a limerick about {topic}"> systemMessage;
 
+  // Create ChatPrompt from MessagePrompt
   ChatPrompt<systemMessage> prompt;
 
   // Set up model
@@ -39,9 +40,9 @@ int main() {
   // Create substitution to feed to chain
   Substitution<"topic"> topic(userInput);
 
-  // Run chain
+  // run chain
   Message output = chain(topic);
-
+  
   // Print output
   cout << output.content << endl;
 }
