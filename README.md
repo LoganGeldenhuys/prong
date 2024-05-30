@@ -1,6 +1,3 @@
-# Changes for Prong v0.2
-
-
 # Prong v0.2
 
 This is a header-only C++ prompt engineering library (hence the name pro-ng). It aims to work well with the STL and limit external dependencies.
