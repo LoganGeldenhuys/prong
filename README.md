@@ -3,6 +3,49 @@
 This is a header-only C++ prompt engineering library (hence the name pro-ng). It aims to work well with the STL and limit external dependencies.
 The core prong library has no dependencies while the only dependencies for prong\_integrations are on Boost and OpenSSL to support networking for the OpenAI integration.
 
+## Introduction
+
+### Intended Use
+- Embedded systems or other environments where compute/power constraints prevent the use of python or node.js
+- Existing C++ projects with simple prompt-engineering needs that do not justify spinning up a separate service in another language
+- High-performance code that combines prompt engineering with compute intensive algorithms like HNSW to augment agentic workflows
+
+### Basic Usage
+The following code block illustrates the basic interface
+```c++
+#include "prong.h"
+#include "prong_integrations.h"
+
+using namespace Prong;
+using namespace std;
+
+int main() {
+  // Set up prompts
+  MessagePrompt<"system", "Write a limerick about {topic}"> systemMessage;
+
+  ChatPrompt<systemMessage> prompt;
+
+  // Set up model
+  OpenAIChatModel gpt(OpenAIChatModel::ModelType::GPT_3_5_TURBO);
+
+  // Create chain
+  auto chain = prompt | gpt;
+
+  // Get user input
+  string userInput;
+  cout << "Provide a topic for a limerick" << endl;
+  getline(cin, userInput);
+
+  // Create substitution to feed to chain
+  Substitution<"topic"> topic(userInput);
+
+  // run chain
+  Message output = chain(topic);
+
+  cout << output.content << endl;
+}
+```
+
 ## What's new in v0.2
 
 ### Big Changes
@@ -20,7 +63,7 @@ The core prong library has no dependencies while the only dependencies for prong
 - Deduplicated StringLiteral and TemplateString, StringLiteral is now used for both.
 
 
-## Features
+## Prong Features
 
 ### Static type safety for substituting in prompts
 
@@ -105,7 +148,7 @@ for( auto month : months ){
 vector<Message> outputs = chain(input);
 ```
 
-## Dependencies
+## Set-up and Dependencies
 
 To utilize `prong_integrations`, you must first ensure that OpenSSL (minimum version 3.0.2) and Boost (minimum version 1.74) are installed on your system. While these dependencies are not required for building the core `prong` library, they are required for `prong_integrations`.
 Note `prong_integrations` has been developed for and tested on Linux. It should work on Mac and Windows for dev purposes. However, https certificate loading is not implemented securely for those systems and it should not be run in production in a Mac or Windows environment (as unlikely as that is).
