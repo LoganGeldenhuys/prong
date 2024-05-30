@@ -6,9 +6,9 @@ The core prong library has no dependencies while the only dependencies for prong
 ## What's new in v0.2
 
 ### Big Changes
-- experimental chat stream added, see examples
-- added CTest and Google test to CMake 
-- added formatting (Chromium style) using clang-format and CMake
+- Experimental chat stream added, see examples
+- Added CTest and Google test to CMake 
+- Added formatting (Chromium style) using clang-format and CMake
 
 ### Bug fixes
 - Fixed bug that left trailing null terminators at end of prompt strings
@@ -16,8 +16,8 @@ The core prong library has no dependencies while the only dependencies for prong
 - Fixed a template type deduction failure in message-prompt's batch processing
 
 ### Refactors
-- replaced custom applyToTuple function with std::apply
-- deduplicated StringLiteral and TemplateString, StringLiteral is now used for both.
+- Replaced custom applyToTuple function with std::apply
+- Deduplicated StringLiteral and TemplateString, StringLiteral is now used for both.
 
 
 ## Features
