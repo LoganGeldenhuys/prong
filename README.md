@@ -2,13 +2,12 @@
 
 ## Introduction
 
-Prong is a header-only C++ library developed for prompt engineering. It integrates with standard C++ environments and the STL, facilitating the management and execution of template-driven interactions in systems with minimal dependencies. Prong is particularly suitable for embedded systems, high-performance computing, and existing C++ projects.
+Prong is a header-only C++ library developed for prompt engineering tgat allows developers to build applications that leverage static type safety and efficient performance management for LLM interactions. The library supports various functionalities including:
 
-Prong allows developers to build applications that leverage static type safety and efficient performance management for prompt-based interactions. Applications can range from simple text substitutions in embedded systems to complex, server-side applications that manage dynamic interactions in real-time. Prong supports various functionalities including prompt templates, batch processing, and model integrations, making it ideal for a range of applications:
-
-- Prompt Templates: Prong enables the creation and management of template-driven prompts with static type safety, ensuring compile-time checks and minimizing runtime errors.
-- Batch Processing: The library supports efficient batch processing, allowing multiple prompt interactions to be handled in parallel, optimizing performance for high-throughput applications.
-- Model Integrations: Through the prong_integrations module, Prong facilitates direct integration with AI models, such as OpenAI's offerings, enabling sophisticated AI-driven interactions within C++ applications.
+- Prompt Templates: Prong enables the creation and management of prompts with static type safety, applying compile-time safety checks
+- Chaining: By chaining prompts with other runnables such as models, Prong facilitates the composition of complex prompt engineering operations in a readable and manageable way
+- Batch Processing: The library supports efficient batch processing, allowing multiple prompt interactions to be handled in parallel
+- Model Integrations: Through the prong_integrations module, Prong facilitates direct integration with AI models, such as OpenAI's offerings
 
 ### Intended Use
 - Embedded systems or other environments where compute/power constraints prevent the use of python or node.js
