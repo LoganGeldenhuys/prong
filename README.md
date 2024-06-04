@@ -7,7 +7,7 @@ Prong is a header-only C++ library developed for prompt engineering tgat allows 
 - **Static Prompt Templates**: Prong enables the creation and management of prompts with static type safety, applying compile-time safety checks
 - **Chaining**: By chaining prompts with other runnables such as models, Prong facilitates the composition of complex prompt engineering operations in a readable and manageable way
 - **Batch Processing**: The library supports efficient batch processing, allowing multiple prompt interactions to be handled in parallel
-- **Model Integrations**: Through the prong_integrations module, Prong facilitates direct integration with AI models, such as GPT 3.5
+- **Model Integrations**: Through the prong_integrations module, Prong facilitates direct integration with AI models, such as those from OpenAI
 
 ### Intended Use
 - Embedded systems or other environments where compute/power constraints prevent the use of python or node.js
