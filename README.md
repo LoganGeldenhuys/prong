@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Prong is a header-only C++ library developed for prompt engineering tgat allows developers to build applications that leverage static type safety and efficient performance management for LLM interactions. The library supports various functionalities including:
+Prong is a header-only C++ library developed for prompt engineering that allows developers to build applications that leverage static type safety and efficient performance management for LLM interactions. The library supports various functionalities including:
 
 - **Static Prompt Templates**: Prong enables the creation and management of prompts with static type safety, applying compile-time safety checks
 - **Chaining**: By chaining prompts with other runnables such as models, Prong facilitates the composition of complex prompt engineering operations in a readable and manageable way
